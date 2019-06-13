@@ -9,6 +9,6 @@ public interface SkoczekService {
     SkoczekDTO getSkoczek(long id);
     List<SkoczekDTO> getSkoczkowie();
     SkoczekDTO updateSkoczek(SkoczekDTO skoczek);
-    void deleteSkoczek(long id);
+    boolean deleteSkoczek(long id);
 
 }

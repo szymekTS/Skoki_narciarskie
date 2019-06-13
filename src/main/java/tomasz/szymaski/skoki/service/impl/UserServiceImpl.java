@@ -49,14 +49,15 @@ public class UserServiceImpl implements SkoczekService {
 
         SkoczekEntity zapisany = repo.findById(id);
         SkoczekDTO returnValue = new SkoczekDTO();
-        BeanUtils.copyProperties(zapisany,returnValue);
-
+        if(zapisany!=null)
+            BeanUtils.copyProperties(zapisany,returnValue);
         return returnValue;
     }
 
     @Override
     public SkoczekDTO updateSkoczek(SkoczekDTO skoczek) {
-        SkoczekEntity zapisany = repo.findById(skoczek.getId());
+        SkoczekEntity zapisany = repo.findByPesel(skoczek.getPesel());
+        skoczek.setId(zapisany.getId());
         BeanUtils.copyProperties(skoczek,zapisany);
         repo.save(zapisany);
         SkoczekDTO returnValue = new SkoczekDTO();
@@ -65,12 +66,13 @@ public class UserServiceImpl implements SkoczekService {
         return returnValue;
     }
 
+
     @Override
-    public void deleteSkoczek(long id) {
+    public boolean deleteSkoczek(long id) {
         SkoczekEntity zapisany = repo.findById(id);
         if(zapisany == null)
-            throw new RuntimeException("Skoczek nie istnieje");
+            return false;
         repo.delete(zapisany);
-
+        return true;
     }
 }

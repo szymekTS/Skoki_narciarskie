@@ -36,7 +36,6 @@ public class SkoczekController {
             BeanUtils.copyProperties(doListy, kolejny);
             returnList.add(kolejny);
         }
-
         return returnList;
     }
 
@@ -62,8 +61,10 @@ public class SkoczekController {
 
     @DeleteMapping(path = "/{id}")
     public String deleteSkoczek(@PathVariable long id){
-        skoczekService.deleteSkoczek(id);
-        return "ok";
+        if(skoczekService.deleteSkoczek(id))
+            return "ok";
+        else
+            return "Nie znaleziono";
 
     }
 
